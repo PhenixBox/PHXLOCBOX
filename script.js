@@ -16,10 +16,22 @@ if (document.getElementById('boxDetails')) {
     document.getElementById('boxDetails').textContent = `Vous avez choisi : ${chosenBox} (tarif mensuel).`;
 }
 
+// Enable/Disable the "Valider" button based on checkbox state
+const checkbox = document.getElementById('acceptCGU');
+const button = document.getElementById('accepterButton');
+
+// Function to toggle button enabled/disabled state
+function toggleButtonState() {
+    button.disabled = !checkbox.checked;
+}
+
+// Add event listener for checkbox state change
+checkbox.addEventListener('change', toggleButtonState);
+
 // Event listener for the "Valider et procéder au paiement" button
-document.getElementById('accepterButton').addEventListener('click', function() {
+button.addEventListener('click', function() {
     // Check if the checkbox is checked
-    if (document.getElementById('acceptCGU').checked) {
+    if (checkbox.checked) {
         // Proceed to Page 3
         window.location.href = 'page3.html';
     } else {

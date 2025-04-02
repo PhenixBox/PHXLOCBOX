@@ -10,35 +10,39 @@ document.getElementById('formPage1').addEventListener('submit', function(e) {
     window.location.href = 'page2.html';
 });
 
-// On page 2 load, display the chosen box details
-if (document.getElementById('boxDetails')) {
-    const chosenBox = sessionStorage.getItem('boxChoice');
-    document.getElementById('boxDetails').textContent = `Vous avez choisi : ${chosenBox} (tarif mensuel).`;
-}
+// Fonction pour afficher les informations de la box choisie sur la page 2
+document.addEventListener('DOMContentLoaded', function() {
+    // Récupérer le choix de stockage de la session
+    const boxChoice = sessionStorage.getItem('boxChoice');
 
-// Enable/Disable the "Valider" button based on checkbox state
-const checkbox = document.getElementById('acceptCGU');
-const button = document.getElementById('accepterButton');
-
-// Function to toggle button enabled/disabled state
-function toggleButtonState() {
-    button.disabled = !checkbox.checked;
-}
-
-// Add event listener for checkbox state change
-checkbox.addEventListener('change', toggleButtonState);
-
-// Event listener for the "Valider et procéder au paiement" button
-button.addEventListener('click', function() {
-    // Check if the checkbox is checked
-    if (checkbox.checked) {
-        // Proceed to Page 3
-        window.location.href = 'page3.html';
-    } else {
-        // Show an alert if the checkbox is not checked
-        alert('Vous devez accepter les CGU et CGV pour continuer.');
+    // Afficher le choix de stockage sur la page 2
+    const boxDetails = document.getElementById('boxDetails');
+    if (boxChoice) {
+        boxDetails.textContent = `Vous avez choisi : ${boxChoice} (tarif mensuel).`;
     }
+
+    // Sélectionner la case à cocher et le bouton
+    const checkbox = document.getElementById('acceptCGU');
+    const button = document.getElementById('accepterButton');
+
+    // Fonction pour activer ou désactiver le bouton selon l'état de la case
+    function toggleButtonState() {
+        button.disabled = !checkbox.checked;
+    }
+
+    // Ajouter un événement pour détecter les changements de la case
+    checkbox.addEventListener('change', toggleButtonState);
+
+    // Ajouter un événement au bouton pour rediriger vers la page 3 si la case est cochée
+    button.addEventListener('click', function() {
+        if (checkbox.checked) {
+            window.location.href = 'page3.html';  // Rediriger vers la page 3
+        } else {
+            alert('Vous devez accepter les CGU et CGV pour continuer.');
+        }
+    });
 });
+
 
 // On page 3, handle the payment button
 document.getElementById('paiementButton')?.addEventListener('click', function() {
